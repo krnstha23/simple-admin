@@ -4,6 +4,7 @@
     import { Button } from '$lib/components/ui/button/index.js';
 
     import { ActiveStauts } from '../../../enums/enums.js';
+    import { goto } from '$app/navigation';
 </script>
 
 <Table.Root class="text-center">
@@ -39,7 +40,10 @@
                 </Table.Cell>
                 <Table.Cell>
                     <div>
-                        <Button class="cursor-pointer bg-blue-600 hover:bg-blue-950">Edit</Button>
+                        <Button
+                            onclick={() => goto(`/users/edit/${user.id}`)}
+                            class="cursor-pointer bg-blue-600 hover:bg-blue-950">Edit</Button
+                        >
                         <Button class="cursor-pointer bg-red-600 hover:bg-red-950">Delete</Button>
                     </div>
                 </Table.Cell>
