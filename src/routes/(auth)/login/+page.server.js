@@ -1,3 +1,5 @@
+import { redirect } from '@sveltejs/kit'
+
 export const actions = {
     default: async ({ request, cookies }) => {
         const data = await request.formData();
@@ -17,6 +19,6 @@ export const actions = {
 
         let token = await res.json();
         cookies.set('user_token', token.response, { path: '/', maxAge: 60 * 60 * 24 });
-        return {};
+        throw redirect(303, '/');
     }
 };
