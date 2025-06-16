@@ -3,7 +3,7 @@
     import * as Table from '$lib/components/ui/table/index.js';
     import { Button } from '$lib/components/ui/button/index.js';
 
-    import { ActiveStauts } from '../../../enums/enums.js';
+    import { ActiveStatus } from '../../../enums/enums.js';
     import { goto } from '$app/navigation';
 </script>
 
@@ -24,7 +24,7 @@
                 <Table.Cell>{user.userName}</Table.Cell>
                 <Table.Cell>{user.designation}</Table.Cell>
                 <Table.Cell>
-                    {#if user.activeStatus == ActiveStauts.Active}
+                    {#if user.activeStatus == ActiveStatus.Active}
                         <div
                             class="rounded-sm border-2 border-solid border-green-500 bg-green-200 p-2 text-gray-700"
                         >
