@@ -19,7 +19,7 @@
             </Button>
         {/snippet}
     </DropdownMenu.Trigger>
-    <DropdownMenu.Content class="w-56">
+    <DropdownMenu.Content class="w-80">
         <DropdownMenu.Group>
             <DropdownMenu.RadioGroup bind:value={position}>
                 {#each options as option (option.value)}

@@ -27,7 +27,7 @@
                 </Breadcrumb.List>
             </Breadcrumb.Root>
         </header>
-        <div class="p-4">
+        <div class="relative p-4">
             {@render children()}
         </div>
     </Sidebar.Inset>
