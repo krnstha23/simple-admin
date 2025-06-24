@@ -33,11 +33,11 @@
             },
             {
                 title: 'Services',
-                url: '#'
+                url: '/services'
             },
             {
                 title: 'Designations',
-                url: '#'
+                url: '/designations'
             },
             {
                 title: 'Settings',
@@ -122,6 +122,7 @@
         <Sidebar.Group>
             <Sidebar.Menu>
                 {#each data.navMain as item, index (item.title)}
+                    {#if item.items?.length}
                     <Collapsible.Root open={index === 15} class="group/collapsible">
                         <Sidebar.MenuItem>
                             <Collapsible.Trigger>
@@ -156,6 +157,13 @@
                             {/if}
                         </Sidebar.MenuItem>
                     </Collapsible.Root>
+                    {:else}
+                        <Sidebar.MenuItem>
+                            <Sidebar.MenuButton>
+                                <a href={item.url}>{item.title}</a>
+                            </Sidebar.MenuButton>
+                        </Sidebar.MenuItem>
+                    {/if}
                 {/each}
             </Sidebar.Menu>
         </Sidebar.Group>

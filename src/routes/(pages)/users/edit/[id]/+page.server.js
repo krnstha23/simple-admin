@@ -10,6 +10,5 @@ export const load = async (serverLoadEvent) => {
     });
 
     var author = await res.json();
-    console.log(author);
     return author;
 };

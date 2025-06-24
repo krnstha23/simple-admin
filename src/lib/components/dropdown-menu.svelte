@@ -1,10 +1,19 @@
 <script lang="ts">
     import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
     import { Button } from '$lib/components/ui/button/index.js';
+    import { createEventDispatcher } from 'svelte';
 
-    const name = $props();
-    let position = $state(name.value);
-    const options = name.list ?? [];
+    const attri = $props();
+    let position = $state(attri.value);
+    const options = attri.list ?? [];
+    const name = attri.name;
+
+    const dispatch = createEventDispatcher();
+
+    function onSelect(newValue) {
+        position = newValue;
+        dispatch('change', { position });
+    }
 </script>
 
 <DropdownMenu.Root>
@@ -12,7 +21,7 @@
         {#snippet child({ props })}
             <Button {...props} variant="outline">
                 {#if position == ''}
-                    {name.name}
+                    {name}
                 {:else}
                     {position}
                 {/if}
@@ -21,7 +30,11 @@
     </DropdownMenu.Trigger>
     <DropdownMenu.Content class="w-80">
         <DropdownMenu.Group>
-            <DropdownMenu.RadioGroup bind:value={position}>
+            <DropdownMenu.RadioGroup
+                {name}
+                bind:value={position}
+                on:change={() => onSelect(position)}
+            >
                 {#each options as option (option.value)}
                     <DropdownMenu.RadioItem value={option.value}>
                         {option.label}
