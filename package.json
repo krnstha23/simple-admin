@@ -24,7 +24,7 @@
 		"@tailwindcss/typography": "^0.5.16",
 		"@tailwindcss/vite": "^4.0.0",
 		"autoprefixer": "^10.4.20",
-		"bits-ui": "^2.8.0",
+		"bits-ui": "^2.8.8",
 		"clsx": "^2.1.1",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
@@ -42,6 +42,8 @@
 	},
 	"dependencies": {
 		"@tailwindcss/postcss": "^4.1.8",
-		"postcss": "^8.5.4"
+		"jsonwebtoken": "^9.0.2",
+		"postcss": "^8.5.4",
+		"svelte-french-toast": "^1.2.0"
 	}
 }

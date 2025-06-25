@@ -26,6 +26,8 @@
  * ```
  */
 declare module '$env/static/private' {
+	export const SECRET_JWT_KEY: string;
+	export const SERVER_NAME: string;
 	export const SHELL: string;
 	export const npm_command: string;
 	export const npm_config_userconfig: string;
@@ -149,6 +151,8 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
+		SECRET_JWT_KEY: string;
+		SERVER_NAME: string;
 		SHELL: string;
 		npm_command: string;
 		npm_config_userconfig: string;

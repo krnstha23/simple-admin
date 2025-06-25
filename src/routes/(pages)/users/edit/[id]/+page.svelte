@@ -6,7 +6,6 @@
     import { Input } from '$lib/components/ui/input/index.js';
     import DatePicker from '$lib/components/date-picker.svelte';
     import { Textarea } from '$lib/components/ui/textarea/index.js';
-    import DropdownMenu from '$lib/components/dropdown-menu.svelte';
     import { ActiveStatus } from '../../../../../enums/enums.js';
 
     export let data;
@@ -156,18 +155,12 @@
                                     <div class="flex items-center">
                                         <Label for="activeStatus">Active Status</Label>
                                     </div>
-                                    <DropdownMenu
-                                        name="Active Status"
-                                        list={activeList}
-                                        value={data.activeStatus == 1 ? 'Active' : 'Inactive'}
-                                    />
                                 </div>
 
                                 <div class="grid w-full gap-1">
                                     <div class="flex items-center">
                                         <Label for="userGroup">User Group</Label>
                                     </div>
-                                    <DropdownMenu name="User Group" list={activeList} />
                                 </div>
                             </div>
                         </div>

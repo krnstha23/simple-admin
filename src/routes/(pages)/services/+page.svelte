@@ -1,12 +1,14 @@
 <script>
     export let data = [];
+    console.log(data);
     import * as Table from '$lib/components/ui/table/index.js';
     import { Button } from '$lib/components/ui/button/index.js';
+    import CreateButton from '$lib/components/create-button.svelte';
     import * as Dialog from '$lib/components/ui/dialog/index.js';
     import { Input } from '$lib/components/ui/input/index.js';
     import { ActiveStatus } from '../../../enums/enums.js';
-    import { goto } from '$app/navigation';
     import * as Pagination from '$lib/components/ui/pagination/index.js';
+    import Toaster from 'svelte-french-toast';
 </script>
 
 <Table.Root class="text-center">
@@ -19,7 +21,7 @@
         </Table.Row>
     </Table.Header>
     <Table.Body>
-        {#each data.post.services as post, index (post.id)}
+        {#each data.services as post, index (post.id)}
             <Table.Row>
                 <Table.Cell>{index + 1}</Table.Cell>
                 <Table.Cell>{post.title}</Table.Cell>
@@ -90,38 +92,34 @@
     </Table.Body>
 </Table.Root>
 
-{#if data.post.totalPages > 1}
-    <Pagination.Root class="mt-5" count={data.post.totalPages} perPage={10}>
-        {#snippet children({ pages, currentPage })}
-            <Pagination.Content>
-                <Pagination.Item>
-                    <Pagination.PrevButton />
-                </Pagination.Item>
+<!-- {#if data.post.totalPages > 1} -->
+<!--     <Pagination.Root class="mt-5" count={data.post.totalPages} perPage={10}> -->
+<!--         {#snippet children({ pages, currentPage })} -->
+<!--             <Pagination.Content> -->
+<!--                 <Pagination.Item> -->
+<!--                     <Pagination.PrevButton /> -->
+<!--                 </Pagination.Item> -->
+<!---->
+<!--                 {#each pages as page (page.key)} -->
+<!--                     {#if page.type === 'ellipsis'} -->
+<!--                         <Pagination.Item> -->
+<!--                             <Pagination.Ellipsis /> -->
+<!--                         </Pagination.Item> -->
+<!--                     {:else} -->
+<!--                         <Pagination.Item> -->
+<!--                             <Pagination.Link {page} isActive={currentPage === page.value}> -->
+<!--                                 {page.value} -->
+<!--                             </Pagination.Link> -->
+<!--                         </Pagination.Item> -->
+<!--                     {/if} -->
+<!--                 {/each} -->
+<!---->
+<!--                 <Pagination.Item> -->
+<!--                     <Pagination.NextButton /> -->
+<!--                 </Pagination.Item> -->
+<!--             </Pagination.Content> -->
+<!--         {/snippet} -->
+<!--     </Pagination.Root> -->
+<!-- {/if} -->
 
-                {#each pages as page (page.key)}
-                    {#if page.type === 'ellipsis'}
-                        <Pagination.Item>
-                            <Pagination.Ellipsis />
-                        </Pagination.Item>
-                    {:else}
-                        <Pagination.Item>
-                            <Pagination.Link {page} isActive={currentPage === page.value}>
-                                {page.value}
-                            </Pagination.Link>
-                        </Pagination.Item>
-                    {/if}
-                {/each}
-
-                <Pagination.Item>
-                    <Pagination.NextButton />
-                </Pagination.Item>
-            </Pagination.Content>
-        {/snippet}
-    </Pagination.Root>
-{/if}
-
-<Button
-    class="fixed right-10 bottom-8 h-12 w-12 cursor-pointer rounded-full border-2 border-blue-800 bg-blue-700 text-3xl font-bold 
-    text-amber-50 shadow-md hover:bg-blue-950"
-    onclick={() => goto('/services/create')}>&#x2B</Button
->
+<CreateButton link="/services/create" />
