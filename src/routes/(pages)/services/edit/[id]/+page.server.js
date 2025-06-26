@@ -1,18 +1,12 @@
 import { redirect } from '@sveltejs/kit';
-import toast from 'svelte-french-toast';
+import { fetchData } from '$lib/fetch';
 
 export const load = async (serverLoadEvent) => {
-    const { fetch, cookies, params } = serverLoadEvent;
-    const token = 'Bearer ' + cookies.get('user_token');
+    const { cookies, params } = serverLoadEvent;
     const { id } = params;
-    const res = await fetch(`http://localhost:5126/api/service/${id}`, {
-        headers: {
-            Authorization: token
-        }
-    });
-    let post = await res.json();
-    toast.success('Data loaded successfully');
-    return post;
+    const endpoint = `/service/${id}`;
+
+    return await fetchData(endpoint, 'GET', cookies);
 };
 
 export const actions = {
@@ -22,23 +16,15 @@ export const actions = {
         const title = data.get('title');
         const description = data.get('description');
         const activeStatus = data.get('activeStatus');
-        let status = activeStatus == 'Active' ? 1 : 2;
-        const token = 'Bearer ' + cookies.get('user_token');
-        await fetch(`http://localhost:5126/api/service/${id}`, {
-            method: 'PUT',
-            headers: {
-                Authorization: token,
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-                id: id,
-                title: title,
-                description: description,
-                activeStatus: status
-            })
+        const body = JSON.stringify({
+            id: id,
+            title: title,
+            description: description,
+            activeStatus: activeStatus == 'Active' ? 1 : 2
         });
+        const endpoint = `/service/${id}`;
 
+        await fetchData(endpoint, 'PUT', cookies, body);
         throw redirect(303, '/services');
     }
 };

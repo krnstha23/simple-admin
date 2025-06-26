@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let data = [];
+    export let data;
     import * as Table from '$lib/components/ui/table/index.js';
     import { Button } from '$lib/components/ui/button/index.js';
     import * as Dialog from '$lib/components/ui/dialog/index.js';
@@ -72,13 +72,13 @@
 
 <Dialog.Root>
     <Dialog.Trigger
-        class="fixed right-10 bottom-8 h-12 w-12 cursor-pointer rounded-full border-2 border-blue-800 bg-blue-700 text-3xl font-bold 
-        text-amber-50 shadow-md hover:bg-blue-950"
+        class="fixed right-10 bottom-8 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border-2 border-blue-800 
+        bg-blue-700 text-3xl font-bold text-amber-50 shadow-md hover:bg-blue-950"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

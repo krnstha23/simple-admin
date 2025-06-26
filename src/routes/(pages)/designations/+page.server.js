@@ -1,50 +1,38 @@
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
+import { fetchData } from '$lib/fetch';
 
 export const load = async (serverLoadEvent) => {
-    const { fetch, cookies } = serverLoadEvent;
-    const token = 'Bearer ' + cookies.get('user_token');
-    const res = await fetch('http://localhost:5126/api/Designation', {
-        headers: {
-            Authorization: token
-        }
-    });
-    let post = await res.json();
-    return { post: post };
+    const { cookies } = serverLoadEvent;
+    const endpoint = '/Designation';
+
+    const post = await fetchData(endpoint, 'GET', cookies);
+    return { post };
 };
 
 export const actions = {
     save: async ({ request, cookies, url }) => {
         const data = await request.formData();
         const desigantion = data.get('designation');
-        const token = 'Bearer ' + cookies.get('user_token');
-        await fetch('http://localhost:5126/api/Designation', {
-            method: 'POST',
-            headers: {
-                Authorization: token,
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-                designation: desigantion
-            })
+        const endpoint = '/Designation';
+        const body = JSON.stringify({
+            designation: desigantion
         });
 
+        try {
+            await fetchData(endpoint, 'POST', cookies, body);
+        } catch (err) {
+            console.log('Error: ', err);
+            throw error(err.status, err.message);
+        }
         throw redirect(303, url.pathname);
     },
 
     delete: async ({ request, cookies, url }) => {
         const data = await request.formData();
         const desigantion = data.get('designationId');
-        const token = 'Bearer ' + cookies.get('user_token');
-        await fetch(`http://localhost:5126/api/Designation/${desigantion}`, {
-            method: 'DELETE',
-            headers: {
-                Authorization: token,
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include'
-        });
+        const endpoint = `/Designation/${desigantion}`;
 
+        await fetchData(endpoint, 'DELETE', cookies);
         throw redirect(303, url.pathname);
     }
 };

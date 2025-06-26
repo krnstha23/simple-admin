@@ -1,12 +1,12 @@
 <script>
     export let data = [];
-    console.log(data);
     import * as Table from '$lib/components/ui/table/index.js';
     import { Button } from '$lib/components/ui/button/index.js';
     import CreateButton from '$lib/components/create-button.svelte';
     import * as Dialog from '$lib/components/ui/dialog/index.js';
     import { Input } from '$lib/components/ui/input/index.js';
     import { ActiveStatus } from '../../../enums/enums.js';
+    import { goto } from '$app/navigation';
     import * as Pagination from '$lib/components/ui/pagination/index.js';
     import Toaster from 'svelte-french-toast';
 </script>
