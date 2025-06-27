@@ -2,10 +2,14 @@ import { redirect } from '@sveltejs/kit';
 import { fetchData } from '$lib/fetch';
 
 export const load = async (serverLoadEvent) => {
-    const { cookies } = serverLoadEvent;
-    const endpoint = `/service?offset=${0}`;
+    const { cookies, url } = serverLoadEvent;
+    const page = url.searchParams.get('page') ?? 0;
+    console.log(page);
+    const endpoint = `/service?offset=${page}`;
 
-    return await fetchData(endpoint, 'GET', cookies);
+    var data = await fetchData(endpoint, 'GET', cookies);
+    data.page = page;
+    return data;
 };
 
 export const actions = {

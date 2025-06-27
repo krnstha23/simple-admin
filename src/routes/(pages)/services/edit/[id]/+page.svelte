@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-                <Button type="submit" class="w-fit bg-blue-600 hover:bg-blue-800">Update</Button>
+                <Button type="submit" class="custom-edit-btn w-fit">Update</Button>
             </div>
         </Card.Content>
     </Card.Root>

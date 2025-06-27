@@ -4,6 +4,7 @@
     import { Button } from '$lib/components/ui/button/index.js';
     import * as Dialog from '$lib/components/ui/dialog/index.js';
     import { Input } from '$lib/components/ui/input/index.js';
+    import { Plus } from 'lucide-svelte';
 </script>
 
 <Table.Root class="text-center">
@@ -27,9 +28,7 @@
                         <!-- > -->
                         <Dialog.Root>
                             <Dialog.Trigger>
-                                <Button class="cursor-pointer bg-red-600 hover:bg-red-950"
-                                    >Delete</Button
-                                >
+                                <Button class="custom-delete-btn">Delete</Button>
                             </Dialog.Trigger>
                             <Dialog.Content>
                                 <Dialog.Header>
@@ -46,15 +45,12 @@
                                                     bind:value={post.id}
                                                     required
                                                 />
-                                                <Button
-                                                    type="submit"
-                                                    class="mt-4 cursor-pointer bg-red-600 hover:bg-red-950"
+                                                <Button type="submit" class="custom-delete-btn mt-4"
                                                     >Delete</Button
                                                 >
                                             </form>
                                             <Dialog.Close>
-                                                <Button
-                                                    class="cursor-poinnter mt-4 bg-green-600 hover:bg-green-950"
+                                                <Button class=" custom-confirm-btn mt-4"
                                                     >Close</Button
                                                 >
                                             </Dialog.Close>
@@ -71,27 +67,8 @@
 </Table.Root>
 
 <Dialog.Root>
-    <Dialog.Trigger
-        class="fixed right-10 bottom-8 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border-2 border-blue-800 
-        bg-blue-700 text-3xl font-bold text-amber-50 shadow-md hover:bg-blue-950"
-    >
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-plus-icon lucide-plus"
-        >
-            <g transform="translate(12 12) scale(1.5) translate(-12 -12)">
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-            </g>
-        </svg>
+    <Dialog.Trigger class="custom-create-btn flex items-center justify-center">
+        <Plus />
     </Dialog.Trigger>
     <Dialog.Content>
         <Dialog.Header>
@@ -105,7 +82,7 @@
                         id="desgination"
                         required
                     />
-                    <Button class="cursor-pointer bg-green-600 hover:bg-green-950">Save</Button>
+                    <Button class="custom-confirm-btn">Save</Button>
                 </form>
             </Dialog.Description>
         </Dialog.Header>

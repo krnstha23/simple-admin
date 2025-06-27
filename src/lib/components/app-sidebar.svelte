@@ -25,7 +25,7 @@
             },
             {
                 title: 'Pages',
-                url: '#'
+                url: '/pages'
             },
             {
                 title: 'Projects',
@@ -123,40 +123,42 @@
             <Sidebar.Menu>
                 {#each data.navMain as item, index (item.title)}
                     {#if item.items?.length}
-                    <Collapsible.Root open={index === 15} class="group/collapsible">
-                        <Sidebar.MenuItem>
-                            <Collapsible.Trigger>
-                                {#snippet child({ props })}
-                                    <Sidebar.MenuButton {...props}>
-                                        {item.title}
-                                        <PlusIcon
-                                            class="ml-auto group-data-[state=open]/collapsible:hidden"
-                                        />
-                                        <MinusIcon
-                                            class="ml-auto group-data-[state=closed]/collapsible:hidden"
-                                        />
-                                    </Sidebar.MenuButton>
-                                {/snippet}
-                            </Collapsible.Trigger>
-                            {#if item.items?.length}
-                                <Collapsible.Content>
-                                    <Sidebar.MenuSub>
-                                        {#each item.items as subItem (subItem.title)}
-                                            <Sidebar.MenuSubItem>
-                                                <Sidebar.MenuSubButton isActive={subItem.isActive}>
-                                                    {#snippet child({ props })}
-                                                        <a href={subItem.url} {...props}
-                                                            >{subItem.title}</a
-                                                        >
-                                                    {/snippet}
-                                                </Sidebar.MenuSubButton>
-                                            </Sidebar.MenuSubItem>
-                                        {/each}
-                                    </Sidebar.MenuSub>
-                                </Collapsible.Content>
-                            {/if}
-                        </Sidebar.MenuItem>
-                    </Collapsible.Root>
+                        <Collapsible.Root open={index === 15} class="group/collapsible">
+                            <Sidebar.MenuItem>
+                                <Collapsible.Trigger>
+                                    {#snippet child({ props })}
+                                        <Sidebar.MenuButton {...props}>
+                                            {item.title}
+                                            <PlusIcon
+                                                class="ml-auto group-data-[state=open]/collapsible:hidden"
+                                            />
+                                            <MinusIcon
+                                                class="ml-auto group-data-[state=closed]/collapsible:hidden"
+                                            />
+                                        </Sidebar.MenuButton>
+                                    {/snippet}
+                                </Collapsible.Trigger>
+                                {#if item.items?.length}
+                                    <Collapsible.Content>
+                                        <Sidebar.MenuSub>
+                                            {#each item.items as subItem (subItem.title)}
+                                                <Sidebar.MenuSubItem>
+                                                    <Sidebar.MenuSubButton
+                                                        isActive={subItem.isActive}
+                                                    >
+                                                        {#snippet child({ props })}
+                                                            <a href={subItem.url} {...props}
+                                                                >{subItem.title}</a
+                                                            >
+                                                        {/snippet}
+                                                    </Sidebar.MenuSubButton>
+                                                </Sidebar.MenuSubItem>
+                                            {/each}
+                                        </Sidebar.MenuSub>
+                                    </Collapsible.Content>
+                                {/if}
+                            </Sidebar.MenuItem>
+                        </Collapsible.Root>
                     {:else}
                         <Sidebar.MenuItem>
                             <Sidebar.MenuButton>

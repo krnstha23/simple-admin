@@ -48,7 +48,7 @@
                     </div>
                 </div>
 
-                <Button type="submit" class="w-fit bg-green-600 hover:bg-green-800">Create</Button>
+                <Button type="submit" class="custom-confirm-btn w-fit">Create</Button>
             </div>
         </Card.Content>
     </Card.Root>
