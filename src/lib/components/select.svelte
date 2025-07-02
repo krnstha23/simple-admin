@@ -6,10 +6,11 @@
     const name = data.name;
     let selectedValue = $state(data.value ?? '');
     let holder = data.holder;
+    const changeHandler = data.changeHandler;
 </script>
 
-<Select.Root type="single" {name} bind:value={selectedValue}>
-    <Select.Trigger class="w-full">{selectedValue == '' ? holder : selectedValue}</Select.Trigger>
+<Select.Root type="single" onValueChange={changeHandler} {name} bind:value={selectedValue}>
+    <Select.Trigger class="w-full">{selectedValue === '' ? holder : selectedValue}</Select.Trigger>
     <Select.Content>
         {#each options as option (option.value)}
             <Select.Item value={option.value}>{option.label}</Select.Item>

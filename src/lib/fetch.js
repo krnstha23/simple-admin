@@ -16,7 +16,13 @@ export async function fetchData(endpoint, fetchFn, cookies, body) {
     if (!res.ok) {
         const errorText = await res.text();
         console.error('Fetch error:', res.status, errorText);
-        throw new Error(`Fetch failed with status ${res.status}`);
+        return {
+            type: 'error',
+            error: {
+                message: 'Error while loading data contact api provide'
+            },
+            status: res.status
+        };
     }
 
     const data = await res.json();

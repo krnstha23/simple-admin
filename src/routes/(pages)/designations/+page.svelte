@@ -27,9 +27,7 @@
                         <!--     class="cursor-pointer bg-blue-600 hover:bg-blue-950">Edit</Button -->
                         <!-- > -->
                         <Dialog.Root>
-                            <Dialog.Trigger>
-                                <Button class="custom-delete-btn">Delete</Button>
-                            </Dialog.Trigger>
+                            <Dialog.Trigger class="custom-delete-btn">Delete</Dialog.Trigger>
                             <Dialog.Content>
                                 <Dialog.Header>
                                     <Dialog.Title>Are you sure absolutely sure?</Dialog.Title>

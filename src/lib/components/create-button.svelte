@@ -7,6 +7,6 @@
 </script>
 
 <Button
-    class="custom-create-btn [&_svg:not([class*='size-'])]:size-6"
+    class="custom-float-btn bottom-8 [&_svg:not([class*='size-'])]:size-6"
     onclick={() => goto(data.link)}><Plus /></Button
 >

@@ -7,6 +7,7 @@
     import DatePicker from '$lib/components/date-picker.svelte';
     import { Textarea } from '$lib/components/ui/textarea/index.js';
     import { ActiveStatus } from '../../../../../enums/enums.js';
+    import Select from '$lib/components/select.svelte';
 
     export let data;
     const activeList = Object.entries(ActiveStatus).map(([label, value]) => ({
@@ -160,6 +161,11 @@
                                 <div class="grid w-full gap-1">
                                     <div class="flex items-center">
                                         <Label for="userGroup">User Group</Label>
+                                        <Select
+                                            name="activeStatus"
+                                            holder="Active Status"
+                                            list={activeList}
+                                        />
                                     </div>
                                 </div>
                             </div>
