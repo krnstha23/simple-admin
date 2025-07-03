@@ -42,7 +42,8 @@ export const load = async (serverLoadEvent) => {
 };
 
 export const actions = {
-    save: async ({ request, cookies, url }) => {
+    create: async ({ request, cookies }) => {
+        console.log('save');
         const data = await request.formData();
         const designation = data.get('designation');
         if (designation.length < 1) {
@@ -73,7 +74,13 @@ export const actions = {
                 };
             }
 
-            throw redirect(303, url.pathname);
+            return {
+                type: 'success',
+                error: {
+                    message: 'New designation has been created.'
+                },
+                status: 400
+            };
         } catch (err) {
             if (
                 err &&

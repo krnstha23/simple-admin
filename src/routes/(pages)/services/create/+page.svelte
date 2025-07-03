@@ -6,30 +6,69 @@
     import { ActiveStatus } from '../../../../enums/enums.js';
     import Textarea from '$lib/components/ui/textarea/textarea.svelte';
     import Select from '$lib/components/select.svelte';
+    import toast from 'svelte-french-toast';
+    import { enhance } from '$app/forms';
+    import { goto } from '$app/navigation';
 
-    export let data;
+    let loading = $state(false);
 
     const activeList = Object.entries(ActiveStatus).map(([label, value]) => ({
         label,
         value: value === 1 ? 'Active' : 'Inactive'
     }));
+
+    const saveToast = () => {
+        return async ({ result }) => {
+            loading = true;
+            try {
+                const res = await result;
+                if (!res) return;
+                console.log(res);
+
+                switch (res.type) {
+                    case 'success':
+                        if (res.data.type === 'error') {
+                            toast.error(res.data.error?.message || 'Unable to create the service', {
+                                position: 'top-right'
+                            });
+                        }
+                        break;
+                    case 'error':
+                        toast.error(res.data.error?.message || 'Unable to create the service', {
+                            position: 'top-right'
+                        });
+                        break;
+                    case 'redirect':
+                        goto('/services');
+                        toast.success(res.error?.message || 'The service has been created', {
+                            position: 'top-right'
+                        });
+                        break;
+                    default:
+                        toast.error('Unexpected response', {
+                            position: 'top-right'
+                        });
+                }
+            } catch (error) {
+                toast.error(error.message || 'Processing failed to create the service', {
+                    position: 'top-right'
+                });
+            } finally {
+                loading = false;
+                open = false;
+            }
+        };
+    };
 </script>
 
-<form method="POST">
+<form method="POST" use:enhance={saveToast}>
     <Card.Root>
         <Card.Content>
             <div class="grid gap-6">
                 <div class="grid gap-4">
                     <div class="grid w-full gap-1">
                         <Label for="title">Title</Label>
-                        <Input
-                            id="title"
-                            type="text"
-                            name="title"
-                            placeholder="Title"
-                            bind:value={data.title}
-                            required
-                        />
+                        <Input id="title" type="text" name="title" placeholder="Title" required />
                     </div>
                     <div class="grid w-full gap-1">
                         <Label for="description">Description</Label>
@@ -38,7 +77,6 @@
                             type="text"
                             name="description"
                             placeholder="Description"
-                            bind:value={data.description}
                             required
                         />
                     </div>
