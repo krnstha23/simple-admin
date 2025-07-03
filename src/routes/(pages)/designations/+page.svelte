@@ -1,10 +1,77 @@
-<script lang="ts">
-    export let data;
+<script>
+    let { data } = $props();
+
     import * as Table from '$lib/components/ui/table/index.js';
     import { Button } from '$lib/components/ui/button/index.js';
     import * as Dialog from '$lib/components/ui/dialog/index.js';
     import { Input } from '$lib/components/ui/input/index.js';
     import { Plus } from 'lucide-svelte';
+    import toast from 'svelte-french-toast';
+    import { onMount } from 'svelte';
+    import { invalidateAll } from '$app/navigation';
+    import DeleteDialog from '$lib/components/delete-dialog.svelte';
+
+    let loading = $state(false);
+    let open = $state(false);
+
+    onMount(() => {
+        if (data.type == 'error') {
+            toast.error(data.error?.message || 'Unable to load sevices', {
+                position: 'top-right'
+            });
+        }
+
+        if (data.data.length < 1) {
+            toast.error('No data found', {
+                position: 'top-right'
+            });
+        }
+    });
+
+    const deleteToast = () => {
+        return async ({ result }) => {
+            loading = true;
+            try {
+                const res = await result;
+                if (!res) return;
+
+                switch (res.type) {
+                    case 'success':
+                        if (res.data.type === 'error') {
+                            open = true;
+                            toast.error(
+                                res.data.error?.message || 'Unable to delete the designation',
+                                {
+                                    position: 'top-right'
+                                }
+                            );
+                        }
+                        break;
+                    case 'error':
+                        toast.error(res.data.error?.message || 'Unable to delete the designation', {
+                            position: 'top-right'
+                        });
+                        break;
+                    case 'redirect':
+                        await invalidateAll();
+                        toast.success(res.error?.message || 'The designation has been deleted', {
+                            position: 'top-right'
+                        });
+                        break;
+                    default:
+                        toast.error('Unexpected response', {
+                            position: 'top-right'
+                        });
+                }
+            } catch (error) {
+                toast.error(error.message || 'Processing failed to delete the designation', {
+                    position: 'top-right'
+                });
+            } finally {
+                loading = false;
+            }
+        };
+    };
 </script>
 
 <Table.Root class="text-center">
@@ -16,7 +83,7 @@
         </Table.Row>
     </Table.Header>
     <Table.Body>
-        {#each data.post as post, index (post.id)}
+        {#each data.data as post, index (post.id)}
             <Table.Row>
                 <Table.Cell>{index + 1}</Table.Cell>
                 <Table.Cell>{post.designation}</Table.Cell>
@@ -26,37 +93,13 @@
                         <!--     onclick={() => goto(`/users/edit/${post.id}`)} -->
                         <!--     class="cursor-pointer bg-blue-600 hover:bg-blue-950">Edit</Button -->
                         <!-- > -->
-                        <Dialog.Root>
-                            <Dialog.Trigger class="custom-delete-btn">Delete</Dialog.Trigger>
-                            <Dialog.Content>
-                                <Dialog.Header>
-                                    <Dialog.Title>Are you sure absolutely sure?</Dialog.Title>
-                                    <Dialog.Description>
-                                        This action cannot be undone. This will permanently delete
-                                        this designation.
-                                        <div class="flex justify-center gap-3">
-                                            <form method="POST" action="?/delete">
-                                                <Input
-                                                    type="hidden"
-                                                    name="designationId"
-                                                    id="desginationId"
-                                                    bind:value={post.id}
-                                                    required
-                                                />
-                                                <Button type="submit" class="custom-delete-btn mt-4"
-                                                    >Delete</Button
-                                                >
-                                            </form>
-                                            <Dialog.Close>
-                                                <Button class=" custom-confirm-btn mt-4"
-                                                    >Close</Button
-                                                >
-                                            </Dialog.Close>
-                                        </div>
-                                    </Dialog.Description>
-                                </Dialog.Header>
-                            </Dialog.Content>
-                        </Dialog.Root>
+
+                        <DeleteDialog
+                            name="designationId"
+                            id={post.id}
+                            {open}
+                            deleteHandler={deleteToast}
+                        />
                     </div>
                 </Table.Cell>
             </Table.Row>
@@ -65,7 +108,7 @@
 </Table.Root>
 
 <Dialog.Root>
-    <Dialog.Trigger class="custom-create-btn flex items-center justify-center">
+    <Dialog.Trigger class="custom-float-btn bottom-8 flex items-center justify-center">
         <Plus />
     </Dialog.Trigger>
     <Dialog.Content>
